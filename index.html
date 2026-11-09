@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Oficina de Agentes · Diego Osorio</title>
+<meta name="description" content="Oficina virtual en pixel art con el equipo de agentes de IA de Diego Osorio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<header class="top">
+  <h1 id="titulo">Oficina de Agentes · Diego Osorio</h1>
+  <div class="barra">
+    <span id="contador" class="contador">13 agentes · 0 trabajando ahora</span>
+    <label class="modo"><input type="checkbox" id="modoDia" checked> <span>☀️ Día en la oficina</span></label>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="oficina-wrap" aria-label="Mapa de la oficina">
+    <div class="oficina" id="oficina">
+      <img src="oficina.jpg" alt="Oficina pixel art con 13 robots, cada uno en su escritorio" width="720" height="1280">
+      <div id="zonas"></div>
+    </div>
+    <p class="pista">Toca o pasa el mouse por un escritorio · clic para ver la ficha</p>
+  </section>
+
+  <aside class="panel" id="panel" aria-live="polite">
+    <div class="panel-vacio" id="panelVacio">
+      <p class="pixel">👋 ¡Bienvenido!</p>
+      <p>Elige un escritorio para conocer a cada agente: qué hace, a quién le reporta y en qué está ahora.</p>
+      <ul id="leyenda" class="leyenda"></ul>
+    </div>
+    <article class="tarjeta" id="tarjeta" hidden>
+      <button class="cerrar" id="cerrar" aria-label="Cerrar">✕</button>
+      <p class="tag" id="tRol"></p>
+      <h2 id="tNombre"></h2>
+      <p class="estado-t" id="tEstado"></p>
+      <dl>
+        <dt>Qué hace</dt><dd id="tHace"></dd>
+        <dt>Reporta a</dt><dd id="tReporta"></dd>
+        <dt>Equipo a cargo</dt><dd id="tEquipo"></dd>
+      </dl>
+    </article>
+  </aside>
+</main>
+<div class="velo" id="velo"></div>
+
+<script src="agentes.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
