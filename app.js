@@ -16,6 +16,7 @@
     var v = tamVisor(), s = Math.min(v.w / IMG_W, v.h / IMG_H);
     base.w = IMG_W * s; base.h = IMG_H * s;
     lienzo.style.width = base.w + 'px'; lienzo.style.height = base.h + 'px';
+    lienzo.style.setProperty('--u', (base.w / 100).toFixed(3) + 'px');
   }
   function limitar(){
     var v = tamVisor(), w = base.w * vista.z, h = base.h * vista.z;
@@ -130,7 +131,13 @@
     z.style.width = a.zona.w + '%'; z.style.height = a.zona.h + '%';
     z.setAttribute('aria-label', a.nombre);
     z.dataset.id = a.id;
-    z.innerHTML = '<span class="punto"></span><span class="globo"></span>';
+    var partes = a.nombre.split(' · ');
+    z.innerHTML = '<span class="placa"><b></b><small></small></span><span class="punto"></span><span class="globo"></span>';
+    var placa = z.querySelector('.placa');
+    if (a.placa === 'abajo') placa.classList.add('abajo');
+    if (a.lider || a.id === 'lider-trafico') placa.classList.add('jefe');
+    placa.querySelector('b').textContent = (a.lider ? '👑 ' : '') + partes[0];
+    placa.querySelector('small').textContent = partes.length > 1 ? partes.slice(1).join(' · ') : a.rol;
     var t = null;
     z.addEventListener('click', function(){
       clearTimeout(t); t = setTimeout(function(){ abrir(a.id); }, 220); // espera por si es doble clic
@@ -165,6 +172,7 @@
     var e = est(a);
     document.getElementById('tNombre').textContent = (a.lider ? '👑 ' : '') + a.nombre;
     document.getElementById('tRol').textContent = a.rol;
+    document.getElementById('tDepto').textContent = a.departamento || '—';
     var te = document.getElementById('tEstado');
     te.textContent = 'Estado: ' + textoEstado(a); te.style.setProperty('--c', e.color);
     document.getElementById('tHace').textContent = a.hace;

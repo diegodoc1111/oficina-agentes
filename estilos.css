@@ -77,6 +77,18 @@ h1{font-family:var(--pixel);font-size:12px;margin:0;color:var(--acento);text-sha
 .zona:hover .globo,.zona:focus-visible .globo,.zona.activa .globo,.zona.seleccionada .globo{opacity:1;animation:flota 1.6s ease-in-out infinite}
 @keyframes flota{0%,100%{margin-bottom:0}50%{margin-bottom:4px}}
 
+/* Placas con el nombre de cada agente (escalan con la imagen) */
+.placa{position:absolute;left:50%;top:0;transform:translate(-50%,-55%);z-index:3;pointer-events:none;
+  display:flex;flex-direction:column;align-items:center;white-space:nowrap;line-height:1;
+  background:linear-gradient(#2a1d45,#160f26);border:calc(var(--u,10px)*.16) solid #c9a24a;border-radius:calc(var(--u,10px)*.35);
+  padding:calc(var(--u,10px)*.18) calc(var(--u,10px)*.55);box-shadow:0 calc(var(--u,10px)*.15) 0 #000, 0 0 calc(var(--u,10px)*.6) rgba(255,200,90,.35)}
+.placa b{font-family:var(--vt);font-weight:normal;font-size:calc(var(--u,10px)*1.32);color:#ffe7a3;text-shadow:1px 1px 0 #000}
+.placa small{font-family:var(--vt);font-size:calc(var(--u,10px)*.9);color:#d9ccf5;margin-top:calc(var(--u,10px)*.05)}
+.placa.jefe{border-color:#ffd166;background:linear-gradient(#4a2d10,#24150a)}
+.placa.jefe b{font-size:calc(var(--u,10px)*1.5)}
+.placa.abajo{top:auto;bottom:0;transform:translate(-50%,55%)}
+.zona.seleccionada .placa,.zona:hover .placa{border-color:#fff}
+
 /* Ficha flotante a la derecha */
 .panel{position:fixed;z-index:12;right:14px;top:calc(var(--barra) + 10px);width:360px;max-height:calc(100vh - var(--barra) - 90px);overflow:auto;
   background:var(--bg2);border:4px solid var(--borde);box-shadow:6px 6px 0 #000;padding:16px;
