@@ -6,7 +6,7 @@
       velo = document.getElementById('velo'), nivel = document.getElementById('nivel');
   var seleccionado = null, nodos = {};
   var params = new URLSearchParams(location.search);
-  document.getElementById('titulo').textContent = D.titulo;
+  document.getElementById('titulo').title = D.titulo;
   if (params.get('debug') === '1') document.body.classList.add('debug');
 
   /* ---------- Vista: contain + zoom/paneo ---------- */
@@ -156,7 +156,7 @@
   }
   function contador(){
     var n = A.filter(function(a){ return est(a).activo; }).length;
-    document.getElementById('contador').textContent = A.length + ' agentes · ' + n + ' trabajando ahora';
+    document.getElementById('contador').textContent = n + '/' + A.length + ' trabajando';
   }
 
   /* ---------- Ficha ---------- */
@@ -207,7 +207,8 @@
   document.addEventListener('keydown', function(ev){
     if (ev.target.tagName === 'INPUT' || ev.ctrlKey || ev.metaKey || ev.altKey) return;
     var c = centro();
-    if (ev.key === 'Escape') cerrar();
+    if (ev.key === 'Escape') { cerrar(); toggleAyuda(false); }
+    else if (ev.key === '?') toggleAyuda();
     else if (ev.key === '+' || ev.key === '=') zoomEn(vista.z * 1.4, c[0], c[1], true);
     else if (ev.key === '-' || ev.key === '_') zoomEn(vista.z / 1.4, c[0], c[1], true);
     else if (ev.key === '0') reset();
@@ -215,7 +216,8 @@
   });
 
   /* ---------- Leyenda ---------- */
-  var ley = document.getElementById('leyenda');
+  ['leyenda', 'leyenda2'].forEach(function(idL){
+  var ley = document.getElementById(idL);
   Object.keys(E).forEach(function(k){
     var li = document.createElement('li');
     li.innerHTML = '<i></i><span></span>';
@@ -223,6 +225,14 @@
     li.querySelector('span').textContent = E[k].emoji + ' ' + E[k].texto;
     ley.appendChild(li);
   });
+  });
+  var ayuda = document.getElementById('ayuda'), btnAyuda = document.getElementById('btnAyuda');
+  function toggleAyuda(abrirla){
+    ayuda.hidden = !(abrirla === undefined ? ayuda.hidden : abrirla);
+    btnAyuda.setAttribute('aria-expanded', String(!ayuda.hidden));
+  }
+  btnAyuda.addEventListener('click', function(ev){ ev.stopPropagation(); toggleAyuda(); });
+  document.addEventListener('click', function(ev){ if (!ayuda.hidden && !ayuda.contains(ev.target)) toggleAyuda(false); });
 
   var pista = document.getElementById('pista'), tp = setTimeout(ocultarPista, 7000);
   function ocultarPista(){ pista.classList.add('oculta'); }

@@ -19,12 +19,25 @@
 </div>
 
 <header class="top">
-  <h1 id="titulo">Oficina de Agentes · Diego Osorio</h1>
+  <h1 id="titulo" title="Oficina de Agentes · Diego Osorio">Oficina de Agentes<span class="largo"> · Diego Osorio</span></h1>
   <ul id="leyenda" class="leyenda" aria-label="Estados"></ul>
-  <span id="contador" class="contador">13 agentes · 0 trabajando ahora</span>
-  <label class="modo" title="Rota estados al azar"><input type="checkbox" id="modoDia" checked> <span>☀️ Día en la oficina</span></label>
+  <span id="contador" class="contador" title="Agentes trabajando ahora">0/13 trabajando</span>
+  <label class="modo" title="Día en la oficina: rota estados al azar"><input type="checkbox" id="modoDia" checked> <span>☀️<span class="largo-modo"> Día en la oficina</span></span></label>
+  <button class="btn" id="btnAyuda" title="Estados y controles" aria-label="Estados y controles" aria-expanded="false" aria-controls="ayuda">?</button>
   <button class="btn" id="btnFull" title="Pantalla completa (F)" aria-label="Pantalla completa">⛶</button>
 </header>
+<div class="ayuda" id="ayuda" hidden>
+  <p class="ayuda-t">Estados</p>
+  <ul id="leyenda2" class="leyenda vertical"></ul>
+  <p class="ayuda-t">Controles</p>
+  <ul class="atajos">
+    <li>🖱️ Rueda o pellizco: zoom</li>
+    <li>✋ Arrastra: moverte</li>
+    <li>👆 Clic: ver la ficha</li>
+    <li>🔍 Doble clic: acercar a un agente</li>
+    <li>⌨️ + − 0 · F pantalla completa · Esc cerrar</li>
+  </ul>
+</div>
 
 <div class="controles" role="group" aria-label="Zoom">
   <button class="btn" id="btnMas" title="Acercar (+)" aria-label="Acercar">+</button>

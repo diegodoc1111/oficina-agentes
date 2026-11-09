@@ -1,6 +1,6 @@
 :root{
   --bg:#120d1c; --bg2:rgba(29,21,48,.92); --borde:#4b3a6e; --texto:#f3ecff; --suave:#b9a9d9; --acento:#ffd166;
-  --pixel:'Press Start 2P', monospace; --vt:'VT323', monospace; --inv:1;
+  --pixel:'Press Start 2P', monospace; --vt:'VT323', monospace; --inv:1; --barra:40px;
 }
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;overflow:hidden;background:#0b0812;color:var(--texto);font-family:var(--vt);font-size:21px;
@@ -8,7 +8,7 @@ html,body{margin:0;height:100%;overflow:hidden;background:#0b0812;color:var(--te
 button{font:inherit}
 
 /* Visor a pantalla completa */
-.visor{position:fixed;inset:0;overflow:hidden;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;
+.visor{position:fixed;left:0;right:0;bottom:0;top:var(--barra);overflow:hidden;touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none;
   background:radial-gradient(ellipse at center,#2a1d45 0%,#0b0812 75%)}
 .visor.arrastrando{cursor:grabbing}
 .lienzo{position:absolute;left:0;top:0;transform-origin:0 0;will-change:transform}
@@ -17,14 +17,23 @@ button{font:inherit}
 .lienzo.nitido img{image-rendering:pixelated}
 #zonas{position:absolute;inset:0}
 
-/* Barra superior */
-.top{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-  padding:6px 12px;background:rgba(12,8,22,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-  border-bottom:2px solid rgba(120,95,170,.55)}
-h1{font-family:var(--pixel);font-size:clamp(10px,1.1vw,15px);margin:0;color:var(--acento);text-shadow:2px 2px 0 #000;flex:1 1 auto}
-.contador{font-family:var(--pixel);font-size:clamp(8px,.8vw,11px);background:rgba(0,0,0,.45);border:2px solid var(--borde);padding:6px 8px}
-.modo{cursor:pointer;user-select:none;font-size:19px;white-space:nowrap}
-.modo input{accent-color:var(--acento);width:16px;height:16px;vertical-align:middle}
+/* Barra superior: una sola línea, su alto se reserva arriba */
+.top{position:fixed;top:0;left:0;right:0;z-index:10;height:var(--barra);display:flex;align-items:center;gap:12px;flex-wrap:nowrap;
+  white-space:nowrap;overflow:hidden;padding:0 10px;background:rgba(12,8,22,.92);border-bottom:2px solid rgba(120,95,170,.55)}
+.top > *{flex:0 0 auto}
+.top > h1{flex:1 1 auto}
+h1{font-family:var(--pixel);font-size:12px;margin:0;color:var(--acento);text-shadow:2px 2px 0 #000;flex:1 1 auto;min-width:0;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.contador{font-family:var(--pixel);font-size:10px;background:rgba(0,0,0,.45);border:2px solid var(--borde);padding:4px 7px}
+.modo{cursor:pointer;user-select:none;font-size:18px;white-space:nowrap}
+.modo input{accent-color:var(--acento);width:15px;height:15px;vertical-align:middle;margin:0 2px 0 0}
+.top .btn{height:28px;min-width:30px;font-size:17px;padding:0 6px;box-shadow:1px 1px 0 #000}
+#btnAyuda{font-family:var(--pixel);font-size:11px}
+#btnAyuda[aria-expanded="true"]{border-color:var(--acento);color:var(--acento)}
+.ayuda{position:fixed;z-index:13;top:calc(var(--barra) + 6px);right:10px;width:300px;background:var(--bg2);
+  border:3px solid var(--borde);box-shadow:4px 4px 0 #000;padding:10px 14px}
+.ayuda-t{font-family:var(--pixel);font-size:9px;color:var(--acento);margin:4px 0 6px}
+.atajos{list-style:none;padding:0;margin:0 0 4px;font-size:18px;line-height:1.2}
 .btn{background:#1d1530;color:var(--texto);border:2px solid var(--borde);box-shadow:2px 2px 0 #000;cursor:pointer;
   min-width:36px;height:36px;font-size:22px;line-height:1;padding:0 8px}
 .btn:hover{border-color:var(--acento);color:var(--acento)}
@@ -36,13 +45,16 @@ h1{font-family:var(--pixel);font-size:clamp(10px,1.1vw,15px);margin:0;color:var(
   background:rgba(12,8,22,.6);padding:8px;border:2px solid var(--borde)}
 .nivel{font-family:var(--pixel);font-size:9px;color:var(--suave)}
 
-.leyenda{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:2px 12px}
-.leyenda li{display:flex;align-items:center;gap:5px;font-size:17px;white-space:nowrap}
+.leyenda{list-style:none;padding:0;margin:0;display:flex;flex-wrap:nowrap;gap:2px 10px}
+.leyenda.vertical{flex-direction:column;margin-bottom:8px}
+.leyenda li{display:flex;align-items:center;gap:5px;font-size:16px;white-space:nowrap}
 .leyenda i{display:inline-block;width:10px;height:10px;border-radius:50%;border:2px solid #000}
 .pista{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:10;margin:0;padding:4px 12px;color:var(--texto);
   font-size:18px;background:rgba(12,8,22,.7);border:2px solid var(--borde);pointer-events:none;white-space:nowrap;transition:opacity .8s}
 .pista.oculta{opacity:0}
-@media (max-width:1180px){.leyenda{display:none}}
+#leyenda{display:none}
+@media (min-width:1600px){#leyenda{display:flex} h1{font-size:13px}}
+@media (max-width:1100px){.largo{display:none}}
 
 /* Zonas: viven dentro del lienzo transformado */
 .zona{position:absolute;border:2px solid transparent;border-radius:6px;cursor:pointer;background:transparent;padding:0;
@@ -66,7 +78,7 @@ h1{font-family:var(--pixel);font-size:clamp(10px,1.1vw,15px);margin:0;color:var(
 @keyframes flota{0%,100%{margin-bottom:0}50%{margin-bottom:4px}}
 
 /* Ficha flotante a la derecha */
-.panel{position:fixed;z-index:12;right:14px;top:64px;width:360px;max-height:calc(100vh - 160px);overflow:auto;
+.panel{position:fixed;z-index:12;right:14px;top:calc(var(--barra) + 10px);width:360px;max-height:calc(100vh - var(--barra) - 90px);overflow:auto;
   background:var(--bg2);border:4px solid var(--borde);box-shadow:6px 6px 0 #000;padding:16px;
   backdrop-filter:blur(4px);animation:entra .22s ease-out}
 @keyframes entra{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
@@ -84,12 +96,15 @@ dd{margin:4px 0 0;font-size:21px;line-height:1.15}
 
 /* Celular: barra compacta, ficha como hoja que sube */
 @media (max-width:820px){
-  .top{gap:8px;padding:6px 8px}
-  h1{flex-basis:100%;font-size:10px}
-  .contador{font-size:8px}
-  .modo{font-size:17px}
+  .top{gap:6px;padding:0 6px}
+  h1{font-size:9px}
+  .contador{font-size:8px;padding:3px 5px}
+  .largo-modo{display:none}
+  .top{gap:5px}
+  .pista{font-size:15px;white-space:normal;width:80%;text-align:center;bottom:10px}
   #btnFull{display:none}
     .controles{right:8px;bottom:8px;padding:6px}
+  .ayuda{right:6px;left:6px;width:auto}
   .panel{left:0;right:0;bottom:0;top:auto;width:100%;max-height:70vh;border-width:4px 0 0;animation:sube .25s ease-out}
   .velo.on{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:11}
   .punto{width:10px;height:10px}
