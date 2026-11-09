@@ -11,42 +11,44 @@
 <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+<div class="visor" id="visor" aria-label="Mapa de la oficina. Rueda o pellizco para hacer zoom, arrastra para moverte.">
+  <div class="lienzo" id="lienzo">
+    <img id="fondo" src="oficina.jpg" alt="Oficina pixel art con 13 robots, cada uno en su escritorio" width="2560" height="1440" draggable="false">
+    <div id="zonas"></div>
+  </div>
+</div>
+
 <header class="top">
   <h1 id="titulo">Oficina de Agentes · Diego Osorio</h1>
-  <div class="barra">
-    <span id="contador" class="contador">13 agentes · 0 trabajando ahora</span>
-    <label class="modo"><input type="checkbox" id="modoDia" checked> <span>☀️ Día en la oficina</span></label>
-  </div>
+  <ul id="leyenda" class="leyenda" aria-label="Estados"></ul>
+  <span id="contador" class="contador">13 agentes · 0 trabajando ahora</span>
+  <label class="modo" title="Rota estados al azar"><input type="checkbox" id="modoDia" checked> <span>☀️ Día en la oficina</span></label>
+  <button class="btn" id="btnFull" title="Pantalla completa (F)" aria-label="Pantalla completa">⛶</button>
 </header>
 
-<main class="layout">
-  <section class="oficina-wrap" aria-label="Mapa de la oficina">
-    <div class="oficina" id="oficina">
-      <img src="oficina.jpg" alt="Oficina pixel art con 13 robots, cada uno en su escritorio" width="720" height="1280">
-      <div id="zonas"></div>
-    </div>
-    <p class="pista">Toca o pasa el mouse por un escritorio · clic para ver la ficha</p>
-  </section>
+<div class="controles" role="group" aria-label="Zoom">
+  <button class="btn" id="btnMas" title="Acercar (+)" aria-label="Acercar">+</button>
+  <span class="nivel" id="nivel">1.0x</span>
+  <button class="btn" id="btnMenos" title="Alejar (−)" aria-label="Alejar">−</button>
+  <button class="btn" id="btnReset" title="Restablecer (0)" aria-label="Restablecer vista">⟲</button>
+</div>
 
-  <aside class="panel" id="panel" aria-live="polite">
-    <div class="panel-vacio" id="panelVacio">
-      <p class="pixel">👋 ¡Bienvenido!</p>
-      <p>Elige un escritorio para conocer a cada agente: qué hace, a quién le reporta y en qué está ahora.</p>
-      <ul id="leyenda" class="leyenda"></ul>
-    </div>
-    <article class="tarjeta" id="tarjeta" hidden>
-      <button class="cerrar" id="cerrar" aria-label="Cerrar">✕</button>
-      <p class="tag" id="tRol"></p>
-      <h2 id="tNombre"></h2>
-      <p class="estado-t" id="tEstado"></p>
-      <dl>
-        <dt>Qué hace</dt><dd id="tHace"></dd>
-        <dt>Reporta a</dt><dd id="tReporta"></dd>
-        <dt>Equipo a cargo</dt><dd id="tEquipo"></dd>
-      </dl>
-    </article>
-  </aside>
-</main>
+<p class="pista" id="pista">Rueda o pellizco: zoom · Arrastra: moverte · Doble clic: acercar a un agente · F: pantalla completa</p>
+
+<aside class="panel" id="panel" aria-live="polite" hidden>
+  <article class="tarjeta" id="tarjeta">
+    <button class="cerrar" id="cerrar" aria-label="Cerrar">✕</button>
+    <p class="tag" id="tRol"></p>
+    <h2 id="tNombre"></h2>
+    <p class="estado-t" id="tEstado"></p>
+    <dl>
+      <dt>Qué hace</dt><dd id="tHace"></dd>
+      <dt>Reporta a</dt><dd id="tReporta"></dd>
+      <dt>Equipo a cargo</dt><dd id="tEquipo"></dd>
+    </dl>
+    <button class="btn ancho" id="btnEnfocar">🔍 Acercar a este escritorio</button>
+  </article>
+</aside>
 <div class="velo" id="velo"></div>
 
 <script src="agentes.js"></script>
